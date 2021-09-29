@@ -1,20 +1,19 @@
 import express from "express";
-import data from "./data.js";
-
+import cors from "cors";
+import dotenv from "dotenv";
 
 const app = express();
 
-app.get('/', (req, res) =>{
-    res.send(" Request works")
-})
+import productRouter from "./routes/productRoute.js";
 
+dotenv.config();   
 
-app.get('/api/products', (req, res) =>{
-    res.send(data.products)
-})
+app.use(cors());
 
-const port = process.env.PORT || 5000;  
+app.use("/api/products", productRouter);
 
-app.listen( port,() =>{
-    console.log(`Server started on port ${port}`);
-})
+const port = process.env.PORT || 5000;
+
+app.listen(port, () => {
+  console.log(`Server started on port ${port}`);
+});
